@@ -1,2 +1,2 @@
-# Phyton
-Learning phyton
+# Python
+Learning Python
