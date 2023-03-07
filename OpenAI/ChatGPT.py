@@ -4,16 +4,23 @@ from decouple import config
 API_KEY = config('OPENIA_KEY')
 openai.api_key = API_KEY
 
-response = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}
-    ]
-)
+conversation=[{"role": "system", "content": "You are a helpful assistant."}]
 
-print(response)
+def getCost(tokens):
+    return tokens / 1000 *0.002
 
-print(response['choices'][0]['message']['content'])
+while(True):
+    user_input = input("")     
+    conversation.append({"role": "user", "content": user_input})
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages = conversation,
+        temperature=2,
+        max_tokens=250,
+        top_p=0.9
+    )
+
+    conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
+    print("\n" + response['choices'][0]['message']['content'])
+    print("Cost: {:.5f} $ with {} used tokens \n".format(getCost(response['usage']['total_tokens']), response['usage']['total_tokens']))
