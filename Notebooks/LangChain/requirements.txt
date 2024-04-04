@@ -5,3 +5,6 @@ pinecone-client
 python-dotenv
 langchain-openai
 langchain_experimental
+langchainhub
+wikipedia
+duckduckgo-search
