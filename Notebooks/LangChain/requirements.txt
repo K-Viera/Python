@@ -8,3 +8,4 @@ langchain_experimental
 langchainhub
 wikipedia
 duckduckgo-search
+langchainhub
